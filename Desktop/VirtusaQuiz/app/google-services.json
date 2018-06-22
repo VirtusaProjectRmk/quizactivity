@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "1059918808844",
+    "firebase_url": "https://virtusaquiz.firebaseio.com",
+    "project_id": "virtusaquiz",
+    "storage_bucket": "virtusaquiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059918808844:android:b7bc9809cb54a4b9",
+        "android_client_info": {
+          "package_name": "com.example.harisha.virtusaquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059918808844-o02qdhi3vgo1vdne3tm09qkpq0ulul5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harisha.virtusaquiz",
+            "certificate_hash": "a973b64695e3edb218f33f736c6857f1d5cc434b"
+          }
+        },
+        {
+          "client_id": "1059918808844-c59scu8coq4kdn32980qibnj4fl1af27.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1059918808844-c59scu8coq4kdn32980qibnj4fl1af27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF9kb1h_y32Ri3CQwX5yfWBwr2YAxThBE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059918808844-c59scu8coq4kdn32980qibnj4fl1af27.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
