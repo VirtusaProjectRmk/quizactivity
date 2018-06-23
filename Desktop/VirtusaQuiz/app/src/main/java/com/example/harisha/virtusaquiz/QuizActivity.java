@@ -118,7 +118,7 @@ public class QuizActivity extends AppCompatActivity {
 
         rg.clearCheck();
 
-        mQuestionRef = new Firebase("https://virtusaquiz.firebaseio.com/" + mQuestionNumber + "/question");
+        mQuestionRef = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/"+mQuestionNumber+"/question");
         mQuestionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,7 +130,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError) { }
         });
 
-        mChoice1Ref = new Firebase("https://virtusaquiz.firebaseio.com/" + mQuestionNumber + "/choice1");
+        mChoice1Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/" + mQuestionNumber + "/choice1");
         mChoice1Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -143,7 +143,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mChoice2Ref = new Firebase("https://virtusaquiz.firebaseio.com/" + mQuestionNumber + "/choice2");
+        mChoice2Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" +"/questions1/"+ mQuestionNumber + "/choice2");
         mChoice2Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,7 +157,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mChoice3Ref = new Firebase("https://virtusaquiz.firebaseio.com/" +  mQuestionNumber + "/choice3");
+        mChoice3Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/"+ mQuestionNumber + "/choice3");
         mChoice3Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -171,7 +171,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mChoice4Ref = new Firebase("https://virtusaquiz.firebaseio.com/" + mQuestionNumber + "/choice4");
+        mChoice4Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/" + mQuestionNumber + "/choice4");
         mChoice4Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -184,7 +184,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mAnswerRef = new Firebase("https://virtusaquiz.firebaseio.com/" + mQuestionNumber + "/answer");
+        mAnswerRef = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/" + mQuestionNumber + "/answer");
         mAnswerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
