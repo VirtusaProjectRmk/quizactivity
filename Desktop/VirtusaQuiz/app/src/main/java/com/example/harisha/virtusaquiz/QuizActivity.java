@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-//import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -18,35 +17,35 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-//import java.util.HashSet;
-//import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 public class QuizActivity extends AppCompatActivity {
 
-    //List<String> list;
-    //List<String> Ans;
-
     private TextView mQuestion, quesNum, timer;
     public Firebase mQuestionRef, mChoice1Ref, mChoice2Ref, mChoice3Ref, mChoice4Ref, mAnswerRef;
     public Button nextButton;
-    //public CheckBox mRadio1, mRadio2, mRadio3, mRadio4;
     public RadioButton mRadio1, mRadio2, mRadio3, mRadio4;
     public RadioGroup rg;
-
     public String mAnswer;
     public int questionCounter = 1;
     public int score = 0;
-    public int mQuestionNumber = 0;
-    //private CountDownTimer countDownTimer;
+    public Integer mQuestionNumber[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+    ArrayList<Integer> list;
     public long timeLeftInMillis = 1200000;
-    //public static final long COUNTDOWN_IN_MILLIS = 12000000;
-
+    int c = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        list = new ArrayList<>(Arrays.asList(mQuestionNumber));
+        Collections.shuffle(list);
+        list.toArray(mQuestionNumber);
 
         mRadio1 = findViewById(R.id.choice1);
         mRadio2 = findViewById(R.id.choice2);
@@ -59,8 +58,8 @@ public class QuizActivity extends AppCompatActivity {
         mQuestion = findViewById(R.id.question);
         nextButton = findViewById(R.id.next);
 
+
         updateQuestion();
-        //startCountDown();
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +83,6 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    @Override
     protected void onUserLeaveHint() {
 
         Intent intent = new Intent(QuizActivity.this,BackActivity.class);
@@ -118,7 +116,29 @@ public class QuizActivity extends AppCompatActivity {
 
         rg.clearCheck();
 
-        mQuestionRef = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/"+mQuestionNumber+"/question");
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        String url = "url";
+        switch (day) {
+            case Calendar.MONDAY:
+                url = "https://virtusaquiz.firebaseio.com/0/questions1/";break;
+            case Calendar.TUESDAY:
+                url = "https://virtusaquiz.firebaseio.com/1/questions2/";break;
+            case Calendar.WEDNESDAY:
+                url = "https://virtusaquiz.firebaseio.com/2/questions3/";break;
+            case Calendar.THURSDAY:
+                url = "https://virtusaquiz.firebaseio.com/3/questions4/";break;
+            case Calendar.FRIDAY:
+                url = "https://virtusaquiz.firebaseio.com/4/questions5/";break;
+        }
+
+        mQuestionRef = new Firebase( url+ mQuestionNumber[c] + "/question");
+        mChoice1Ref = new Firebase(url + mQuestionNumber[c] + "/choice1");
+        mChoice2Ref = new Firebase(url + mQuestionNumber[c] + "/choice2");
+        mChoice3Ref = new Firebase(url + mQuestionNumber[c] + "/choice3");
+        mChoice4Ref = new Firebase(url + mQuestionNumber[c] + "/choice4");
+        mAnswerRef = new Firebase(url+ mQuestionNumber[c] + "/answer");
+
         mQuestionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,7 +150,6 @@ public class QuizActivity extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError) { }
         });
 
-        mChoice1Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/" + mQuestionNumber + "/choice1");
         mChoice1Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -143,7 +162,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mChoice2Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" +"/questions1/"+ mQuestionNumber + "/choice2");
         mChoice2Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,7 +175,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mChoice3Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/"+ mQuestionNumber + "/choice3");
         mChoice3Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -171,7 +188,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mChoice4Ref = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/" + mQuestionNumber + "/choice4");
         mChoice4Ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -184,16 +200,10 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mAnswerRef = new Firebase("https://virtusaquiz.firebaseio.com/0" + "/questions1/" + mQuestionNumber + "/answer");
         mAnswerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                /*DataSnapshot data = dataSnapshot.child("answers");
-                Iterable<DataSnapshot> children = data.getChildren();
-                for(DataSnapshot child : children) {*/
-                    mAnswer = dataSnapshot.getValue(String.class);
-                    //Ans.add(mAnswer);
-                //}
+                mAnswer = dataSnapshot.getValue(String.class);
             }
 
             @Override
@@ -223,7 +233,7 @@ public class QuizActivity extends AppCompatActivity {
         quesNum.setText(ans);
 
         questionCounter++;
-        mQuestionNumber++;
+        c++;
 
     }
 
@@ -236,21 +246,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void checkAnswer() {
-        /*if(mRadio1.isChecked()) {
-            Ans.add(mRadio1.getText().toString());
-        }
-        if(mRadio2.isChecked()) {
-            Ans.add(mRadio2.getText().toString());
-        }
-        if(mRadio3.isChecked()) {
-            Ans.add(mRadio3.getText().toString());
-        }
-        if(mRadio4.isChecked()) {
-            Ans.add(mRadio4.getText().toString());
-        }
-        if(new HashSet<>(Ans).equals(new HashSet<>(list))) {
-            score++;
-        }*/
+
         int selected = rg.getCheckedRadioButtonId();
         RadioButton rbSelected = findViewById(selected);
         if(rbSelected.getText().equals(mAnswer)) {
@@ -261,5 +257,4 @@ public class QuizActivity extends AppCompatActivity {
         }
 
     }
-
 }
